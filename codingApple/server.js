@@ -6,7 +6,7 @@ app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 let db;
 const url = 'mongodb+srv://myAtlasDBUser:myAtlasDBUser@myatlasclusteredu.coc8o3e.mongodb.net/?retryWrites=true&w=majority'
 new MongoClient(url).connect().then((client) => {
@@ -50,16 +50,39 @@ app.get('/write', (요청, 응답) => {
 app.post('/add', async (요청, 응답) => {
     console.log(요청.body)
 
-    try{
-        if (요청.body.title==''){
-           응답.send('제목입력안했는데?')
-        }else{
-            await db.collection('post').insertOne({title: 요청.body.title,content
-                :요청.body.conent})
+    try {
+        if (요청.body.title == '') {
+            응답.send('제목입력안했는데?')
+        } else {
+            await db.collection('post').insertOne({
+                title: 요청.body.title, content
+                    : 요청.body.conent
+            })
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
         응답.status(500).send('서버에러남')
     }
     응답.redirect('/list')
+})
+
+app.get('/detail/:aaaa', async (요청, 응답) => {
+    let result = await db.collection('post').findOne({ _id: new ObjectId() })
+    console.log(요청.params)
+    응답.render('detail.ejs')
+})
+
+app.get('/detail/:id/:id2/:id3', async (요청, 응답) => {
+    let result = await db.collection('post').findOne({
+        _id: 요청.
+            params.id
+    });
+    console.log(요청.params)
+    응답.render('detail.ejs',{result})
+})
+
+app.post('/edit', async (요청,응답)=>{
+    await db.collection('post').updateOne({ _id : 1 },
+        {$set : { title: 요청.body.title, content : 요청.body.content}})
+    console.log(요청.body)
 })
