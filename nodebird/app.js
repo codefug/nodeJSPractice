@@ -3,8 +3,7 @@ const app = express()
 const port = 3000
 
 app.use('/:id',(req, res, next) => {
-  console.log(req.params.id);
-  console.log('노드 버드 프로젝트를 시작합니다.')
+  console.log(`${req.params.id} 노드 버드 프로젝트를 시작합니다.`);
   next();
 })
 
