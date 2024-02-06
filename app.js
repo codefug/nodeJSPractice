@@ -90,7 +90,7 @@
 //       refreshToken: `${OAUTH_REFRESH_TOKEN}`,
 //     },
 //   });
-  
+
 //   const message = {
 //     from: OAUTH_USER,
 //     to: receiverEmail,
@@ -109,7 +109,7 @@
 //       <p>이 메일을 요청한 적이 없으시다면 무시하시기 바랍니다.</p>
 //     `,
 //   };
-  
+
 //   try {
 //     await transporter.sendMail(message);
 //     console.log('메일을 성공적으로 발송했습니다.');
